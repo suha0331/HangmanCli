@@ -1,24 +1,45 @@
-letter = require("./letter.js");
+Word = require("./word.js");
 
 var wordBank = ['apple', 'papaya', 'tangerine', 'cantaloupe', 'lychee'];
 var lettersOfWord = [];
+var objArray = [];
+var outputArray = [];
+var output
+
+// Pick a random fruit from wordBank
 var chosenWord = wordBank[Math.floor(Math.random() * wordBank.length)];
+// Change it to the letters
+lettersOfWord = chosenWord.split('');
 
-function Word() {
-    for (i = 0; i < chosenWord.length; i++) {
-        let letters = new letter(chosenWord[i], i);
-        lettersOfWord.push(letters);
+
+function wordGame() {
+    for (i = 0; i < lettersOfWord.length; i++) {
+          objArray.push({
+            value: lettersOfWord[i],
+            placeholder: "_",
+            guessed: false
+        });
     }
+
+    letterOutput();
+
 }
 
-function wordRender() {
-    let blankspace = "";
-    for (j = 0; j < lettersOfWord.length; j++) {
-        blankspace += lettersOfWord[j].letterRender();
+// Test:
+// console.log(chosenWord);
+// console.log(lettersOfWord);
+
+function letterOutput() {
+    for (i = 0; i < objArray.length; i++) {
+        if (objArray[i].guessed == false) {
+            outputArray.push(objArray[i].placeholder);
+        } else {
+            outputArray.push(objArray[i].value);
+        }
     }
-    console.log(blankspace);
+
+    output = outputArray.join(' ');
+    console.log("\n" + output + "\n");
 }
 
-module.exports = Word;
-
-console.log(chosenWord);
+wordGame()

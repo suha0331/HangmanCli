@@ -1,16 +1,17 @@
 inquirer = require("inquirer");
 Word = require("./word.js");
-letter = require("./letter.js");
 
-let numGuesses, correctLetters, chosenWord, wordSpace, wordRender;
+var numGuesses= 10;
+var letterGuessed = "";
 
 function startGame() { 
-    numGuesses = 10;
-    wordRender();
-    letterRender();
-    guessLetter();
+    resetGuesses ();
     console.log("Let's play Hangman!");
 
+}
+
+function resetGuesses() {
+    numGuesses = 10;
 }
 
 function guessLetter() {
@@ -18,18 +19,11 @@ function guessLetter() {
         inquirer.prompt([
             {
                 type: "input",
-                message: "Guess the name of a fruit:",
-                name: "guess",
-                validate: function(value){
-                    let regExp = /^[a-z\-']/i;
-                    if(regExp.test(value) === true && value.length === 1){
-                        return true;
-                    }
-                    return false;
-                }
+                name: "userGuess",
+                message: "Guess the name of a fruit: ",
             }
         ]).then(function(answer){
-        let letterGuessed = answer.guess;
+        correctLetters = lettersOfWord;
         for (i = 0; i < correctLetters.length; i++){
             if(letterGuessed === correctLetters[i].letter){
                 correctLetters[i].revealed = true;
